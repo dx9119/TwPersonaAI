@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Anime Pixel Chat</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            overflow: hidden;
+            font-family: "Press Start 2P", monospace;
+            font-size: 18px; /* комфортный размер для 720p */
+            color: #fff;
+        }
+
+        .chat-box {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 500px; /* оптимально для 720p */
+            max-height: 600px;
+            padding: 16px;
+            background: rgba(27, 27, 46, 0.85);
+            border: 3px solid #ff66cc;
+            box-shadow: 0 0 12px rgba(255, 102, 204, 0.4);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .messages-container {
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 14px;
+            overflow: hidden;
+        }
+
+        .message {
+            position: relative;
+            padding: 12px 14px;
+            background: #3a3a5c;
+            border-left: 6px solid #ff99dd;
+            font-size: 14px;
+            line-height: 1.4;
+            opacity: 1;
+            transition: opacity 0.5s linear;
+        }
+
+        .sender {
+            color: #ff99dd;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .time {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            font-size: 11px;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-box">
+    <div id="messages" class="messages-container"></div>
+</div>
+
+<script>
+    function formatTime(timestamp) {
+        const date = new Date(timestamp);
+        return date.toLocaleTimeString("ru-RU", {
+            hour: "2-digit",
+            minute: "2-digit",
+            timeZone: "Europe/Moscow"
+        });
+    }
+
+    function renderMessages(answers) {
+        const container = document.getElementById('messages');
+        container.innerHTML = '';
+
+        answers.forEach(answer => {
+            const wrap = document.createElement('div');
+            wrap.className = 'message';
+
+            const sender = document.createElement('div');
+            sender.className = 'sender';
+            sender.textContent = "Даник";
+
+            const time = document.createElement('span');
+            time.className = 'time';
+            time.textContent = formatTime(answer.timestamp);
+
+            const text = document.createElement('div');
+            text.textContent = answer.answer;
+
+            wrap.appendChild(sender);
+            wrap.appendChild(time);
+            wrap.appendChild(text);
+
+            container.appendChild(wrap);
+
+            setTimeout(() => {
+                wrap.style.opacity = '0';
+            }, 60000);
+        });
+    }
+
+    const eventSource = new EventSource("/api/ai/answers/stream");
+
+    eventSource.onmessage = function(event) {
+        const answers = JSON.parse(event.data);
+        renderMessages(answers);
+    };
+
+    eventSource.onerror = function(err) {
+        console.error("SSE error:", err);
+    };
+</script>
+
+</body>
+</html>

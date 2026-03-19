@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Постановка задач</title>
+
+    <link rel="stylesheet" th:href="@{/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/app.css}">
+</head>
+<body class="container mt-4">
+
+<h2 class="mb-4">Анализ задач</h2>
+
+<div th:if="${message}" th:class="'alert mb-3 alert-' + ${messageType}">
+    <span th:text="${message}"></span>
+</div>
+
+<div th:each="t : ${tasks}" class="card mb-3">
+    <div class="card-body">
+        <h5 class="card-title">Задача: <span th:text="${t.key}"></span></h5>
+        <p class="card-text">Статус: <span th:text="${t.value}"></span></p>
+
+        <a th:href="@{'/analysis/results?taskId=' + ${t.key}}" target="_blank" class="btn btn-primary me-2">
+            Посмотреть результат
+        </a>
+
+        <form th:action="@{'/analysis/cancel/' + ${t.key}}" method="post" class="d-inline">
+            <button type="submit" class="btn btn-danger">Убрать из списка</button>
+        </form>
+    </div>
+</div>
+
+<div th:if="${taskId}" class="mt-4">
+    <h3>Информация по задаче</h3>
+    <p>Идентификатор: <span th:text="${taskId}"></span></p>
+    <p>Статус: <span th:text="${status}"></span></p>
+</div>
+
+<div class="card mt-4">
+    <div class="card-body">
+        <h3 class="card-title mb-3">Создать новую задачу</h3>
+
+        <form th:action="@{/analysis/run}" method="post">
+
+            <div class="mb-3">
+                <label class="form-label">
+                    Необходимо сформулировать задачу для анализа. На основе вашего описания система выполнит обработку сообщений каждого пользователя из базы данных. В анализ попадут только последние сообщения, и их количество определяется выбранной глубиной анализа.
+                </label>
+                <textarea name="systemPrompt"
+                          rows="4"
+                          class="form-control"
+                          required
+                          minlength="3"
+                          oninvalid="this.setCustomValidity('Описание задачи не может быть пустым')"
+                          oninput="this.setCustomValidity('')"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Дата начала:</label>
+                <input type="datetime-local" name="from" class="form-control"
+                       th:value="${#temporals.format(#temporals.createNow().minusDays(1), 'yyyy-MM-dd''T''HH:mm')}">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Дата окончания:</label>
+                <input type="datetime-local" name="to" class="form-control"
+                       th:value="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd''T''HH:mm')}">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Глубина анализа:</label>
+                <input type="number" name="depth" value="1" class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-success">Запустить</button>
+
+        </form>
+    </div>
+</div>
+
+<script th:src="@{/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

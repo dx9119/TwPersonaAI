@@ -1,0 +1,52 @@
+### Build ###
+target/
+build/
+
+### Maven Wrapper ###
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+
+### IntelliJ IDEA ###
+.idea/
+*.iml
+*.iws
+*.ipr
+
+### VS Code ###
+.vscode/
+
+### Eclipse / STS ###
+.project
+.classpath
+.factorypath
+.settings/
+.springBeans
+.sts4-cache
+.apt_generated
+
+### NetBeans ###
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+### Logs ###
+*.log
+
+### OS files ###
+.DS_Store
+Thumbs.db
+
+### Environment files (local secrets) ###
+.env.*
+.env.local
+.env.local.properties
+
+### SQLite database files ###
+*.db
+*.db-shm
+*.db-wal
+
+### Others ###
+HELP.md

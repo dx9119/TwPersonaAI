@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Результаты анализа</title>
+
+    <link rel="stylesheet" th:href="@{/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/app.css}">
+</head>
+
+<body class="container mt-4">
+
+<h2 class="mb-4">Результаты анализа</h2>
+
+<hr>
+
+<div th:if="${results}" class="mt-4">
+
+    <h3 class="mb-4">
+        Результаты для <span th:text="${taskId}"></span>
+    </h3>
+
+    <div th:each="item : ${results}" class="card mb-4">
+        <div class="card-body">
+
+            <h5 class="card-title mb-3">Задача по пользователю</h5>
+            <p class="bg-light p-2 border rounded" th:text="${item.user}"></p>
+
+            <h5 class="card-title mb-3">Дата создания задачи</h5>
+            <p class="bg-light p-2 border rounded" th:text="${item.createdAt}"></p>
+
+            <h5 class="card-title mb-3">Входные данные по пользователю</h5>
+            <pre class="bg-light p-3 border rounded" th:text="${item.inputData}"></pre>
+
+            <h5 class="card-title mt-4 mb-3">Промпт</h5>
+            <pre class="bg-light p-3 border rounded" th:text="${item.promptText}"></pre>
+
+            <h5 class="card-title mt-4 mb-3">Ответ</h5>
+            <pre class="bg-light p-3 border rounded" th:text="${item.resultText}"></pre>
+
+        </div>
+    </div>
+
+</div>
+
+<script th:src="@{/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+/* Общие настройки */
+body {
+    background-color: #f7f9fc;
+    color: #333;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Заголовки */
+h2, h3 {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+/* Карточки */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.card-body {
+    padding: 24px;
+}
+
+/* Кнопки */
+.btn {
+    padding: 10px 18px;
+    font-size: 15px;
+    border-radius: 8px;
+}
+
+.btn-primary {
+    background-color: #3b7ddd;
+    border-color: #3b7ddd;
+}
+
+.btn-primary:hover {
+    background-color: #2f6cc4;
+}
+
+.btn-danger {
+    background-color: #d9534f;
+    border-color: #d9534f;
+}
+
+.btn-danger:hover {
+    background-color: #c64541;
+}
+
+.btn-success {
+    background-color: #4caf50;
+    border-color: #4caf50;
+}
+
+.btn-success:hover {
+    background-color: #449d48;
+}
+
+/* Формы */
+.form-control {
+    border-radius: 8px;
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+}
+
+.form-control:focus {
+    border-color: #3b7ddd;
+    box-shadow: 0 0 0 0.15rem rgba(59,125,221,0.25);
+}
+
+/* Переключатель */
+.form-check-input {
+    width: 2.5em;
+    height: 1.3em;
+    cursor: pointer;
+}
+
+/* Пре-блоки */
+pre {
+    font-size: 14px;
+    background-color: #f0f3f7 !important;
+    border-radius: 8px !important;
+    border: 1px solid #dce3eb !important;
+}
+
+/* Отступы между секциями */
+.section {
+    margin-bottom: 40px;
+}
+
+/* Контейнер настроек */
+.settings-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Перенос длинных строк в pre и p */
+pre, p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
