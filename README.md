@@ -47,5 +47,5 @@ VALUES
 (524, 0, 'о, увидел наконец', 'DonatePlease', 'TWITCH', 1774019940000);
 ```
 
-![Пример 1](images/src1.jpg)
-![Пример 2](images/src2.jpg)
+![Пример 1](src1.jpg)
+![Пример 2](src2.jpg)
