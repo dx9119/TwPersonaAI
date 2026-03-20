@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Топ авторов</title>
+
+    <link rel="stylesheet" th:href="@{/bootstrap.min.css}">
+
+    <style>
+        body {
+            background: transparent;
+        }
+
+        .stats-box {
+            background: rgba(0, 0, 0, 0.45);
+            color: white;
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-size: 18px;
+            width: 260px;
+        }
+
+        .author-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .author-row:last-child {
+            border-bottom: none;
+        }
+
+        .author-name {
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow:
+                0 0 2px rgba(0,0,0,0.8),
+                0 0 4px rgba(0,0,0,0.6);
+        }
+
+        .author-count {
+            font-weight: 600;
+            color: #ffd86b;
+            text-shadow:
+                0 0 2px rgba(0,0,0,0.7);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="stats-box" id="statsBox">
+    <div th:each="a : ${authors}" class="author-row">
+        <span class="author-name" th:text="${a.name}"></span>
+        <span class="author-count" th:text="${a.count}"></span>
+    </div>
+</div>
+
+<script>
+    async function updateStats() {
+        try {
+            const response = await fetch('/stats/top-authors/data');
+            const data = await response.json();
+
+            const box = document.getElementById('statsBox');
+            box.innerHTML = '';
+
+            data.forEach(a => {
+                const row = document.createElement('div');
+                row.className = 'author-row';
+
+                const name = document.createElement('span');
+                name.className = 'author-name';
+                name.textContent = a.name;
+
+                const count = document.createElement('span');
+                count.className = 'author-count';
+                count.textContent = a.count;
+
+                row.appendChild(name);
+                row.appendChild(count);
+                box.appendChild(row);
+            });
+
+        } catch (e) {
+            console.error('Ошибка обновления статистики', e);
+        }
+    }
+
+    setInterval(updateStats, 2000);
+</script>
+
+</body>
+</html>
